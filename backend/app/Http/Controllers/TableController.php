@@ -11,7 +11,7 @@ class TableController extends Controller
     {
         $tables = RestaurantTable::query()
             ->with(['activeOrder.items'])
-            ->orderBy('name')
+            ->orderBy('id')
             ->get()
             ->map(function (RestaurantTable $table) {
                 return [

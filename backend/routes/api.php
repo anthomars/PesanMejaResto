@@ -14,14 +14,17 @@ Route::middleware('auth.token')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::get('/menu-items', [MenuItemController::class, 'index']);
-    Route::post('/menu-items', [MenuItemController::class, 'store']);
-    Route::put('/menu-items/{menuItem}', [MenuItemController::class, 'update']);
-    Route::delete('/menu-items/{menuItem}', [MenuItemController::class, 'destroy']);
-
     Route::get('/orders', [OrderController::class, 'index']);
-    Route::post('/orders', [OrderController::class, 'store']);
     Route::get('/orders/{order}', [OrderController::class, 'show']);
-    Route::post('/orders/{order}/items', [OrderController::class, 'addItem']);
-    Route::post('/orders/{order}/close', [OrderController::class, 'close']);
-    Route::get('/orders/{order}/receipt', [OrderController::class, 'receipt']);
+    Route::post('/orders/{order}/close', [OrderController::class, 'close'])->middleware('role:waiter,cashier');
+    Route::get('/orders/{order}/receipt', [OrderController::class, 'receipt'])->middleware('role:cashier');
+
+    Route::middleware('role:waiter')->group(function () {
+        Route::post('/menu-items', [MenuItemController::class, 'store']);
+        Route::put('/menu-items/{menuItem}', [MenuItemController::class, 'update']);
+        Route::delete('/menu-items/{menuItem}', [MenuItemController::class, 'destroy']);
+
+        Route::post('/orders', [OrderController::class, 'store']);
+        Route::post('/orders/{order}/items', [OrderController::class, 'addItem']);
+    });
 });
