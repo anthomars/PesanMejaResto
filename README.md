@@ -139,3 +139,10 @@ Urutan dasar:
 7. `GET /api/orders/{id}`
 8. `POST /api/orders/{id}/close`
 9. `GET /api/orders/{id}/receipt`
+10. `POST /api/logout`
+
+Endpoint CRUD menu:
+
+1. `POST /api/menu-items`
+2. `PUT /api/menu-items/{id}`
+3. `DELETE /api/menu-items/{id}`
